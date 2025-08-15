@@ -30,7 +30,8 @@ export const fetchNotes = async (page: number, search: string, tag?: string): Pr
         params: {
             page, 
             ...(search.trim() && { search: search.trim() }),
-            tag,},
+            ...(tag && tag.toLowerCase() !== "all" && {tag}),
+        },
         headers: { Authorization: `Bearer ${myKey}` },
     });
 

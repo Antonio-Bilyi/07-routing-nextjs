@@ -39,9 +39,12 @@ export default function NotesClient({initialData, initialPage, initialQuery, tag
     updateSearchQuery(value);
   };
   
+  const validTag = tag?.toLowerCase() === "all" ? undefined : tag;
+
+
   const {data, isLoading} = useQuery<FetchNotesResponse>({
     queryKey: ["notes", tag, currentPage, searchQuery],
-    queryFn: () => fetchNotes(currentPage, searchQuery, tag),
+    queryFn: () => fetchNotes(currentPage, searchQuery, validTag),
     placeholderData: keepPreviousData,
     initialData: currentPage === initialPage && searchQuery === initialQuery
     ? initialData : undefined,

@@ -8,7 +8,7 @@ interface NotesProps {
 
 export default async function Notes({params}: NotesProps) {
     const { slug } = await params;
-    const tag = slug[0] === "All" ? undefined : slug[0];
+    const tag = slug?.[0] && slug[0].toLowerCase() !== "all" ? slug[0] : undefined;
 
 
     const initialPage = 1;
