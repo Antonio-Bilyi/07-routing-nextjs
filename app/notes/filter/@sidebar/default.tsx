@@ -1,5 +1,5 @@
 import Link from "next/link"
-import css from "./SidebarNotes.module.css"
+import css from "./SideBarNotes.module.css"
 import type { NoteTag } from "@/types/note";
 
 
@@ -34,3 +34,6 @@ const SidebarNotes = () => {
 }
 
 export default SidebarNotes;
+
+
+
