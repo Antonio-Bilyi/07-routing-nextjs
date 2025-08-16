@@ -15,12 +15,10 @@ import css from "./page.module.css"
 
 interface NotesClientProps {
   initialData: FetchNotesResponse;
-  initialPage: number;
-  initialQuery: string;
   tag?: string;
 }
 
-export default function NotesClient({initialData, initialPage, initialQuery, tag}: NotesClientProps) {
+export default function NotesClient({initialData, tag}: NotesClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -43,11 +41,10 @@ export default function NotesClient({initialData, initialPage, initialQuery, tag
 
 
   const {data, isLoading} = useQuery<FetchNotesResponse>({
-    queryKey: ["notes", tag, currentPage, searchQuery],
+    queryKey: ["notes", validTag, currentPage, searchQuery],
     queryFn: () => fetchNotes(currentPage, searchQuery, validTag),
     placeholderData: keepPreviousData,
-    initialData: currentPage === initialPage && searchQuery === initialQuery
-    ? initialData : undefined,
+    initialData,
   })
 
   const totalPages = data?.totalPages ?? 0;

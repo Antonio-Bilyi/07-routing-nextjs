@@ -14,30 +14,33 @@ interface NotePreviewClientProps {
 const NotePreviewClient = ({ id }: NotePreviewClientProps) => {
     const router = useRouter();
 
-    const { data, isLoading, error } = useQuery({
+    const { data: note, isLoading, error } = useQuery({
         queryKey: ["note", id],
         queryFn: () => fetchNoteById(id),
         refetchOnMount: false,
     });
 
-    const closeModal = () => router.back;
+    const handleClose = () => router.back();
 
-    if (isLoading) return  <Modal onClose={closeModal}>Loading, please wait...</Modal>     ;
-    if (error) return <Modal onClose={closeModal}>Something went wrong.</Modal>;
-    if (!data) return <Modal onClose={closeModal}>No note found</Modal>;
+    if (isLoading) return <p>Loading, please wait...</p>;
+    if (error) return <p>Something went wrong.</p> ;
+    if (!note) return  <p>No note found</p>;
     
 
     return (
-        <Modal onClose={closeModal}>
+        <Modal onClose={handleClose}>
             <div className={css.container}>
-                <button className={css.backBtn}>Back</button>
-                <h2>{data.title}</h2>
                 <div className={css.item}>
-                    <p className={css.content}>{data.content}</p>
-                    <p className={css.tag}>{data.tag}</p>
-                    <p className={css.date}>
-                        Created at: {new Date(data.createdAt).toLocaleDateString()}
-                    </p>
+                    {" "}
+                    <button className={css.backBtn} onClick={handleClose}>
+                        Back
+                    </button>
+                    <div className={css.header}>
+                        <h2>{note.title}</h2>
+                    </div>
+                    <p className={css.tag}>{note.tag}</p>
+                    <p className={css.content}>{note.content}</p>
+                    <p className={css.date}>{note.createdAt}</p>
                 </div>
             </div>
         </Modal>
